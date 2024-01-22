@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.decorators import api_view , permission_classes
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
@@ -29,7 +29,13 @@ class UserView(APIView):
         return Response(serializer.data)
 
 
+class MenuItemsView(generics.ListCreateAPIView):
+    serializer_class = MenuSerializer
+    queryset = Menu.objects.all()
 
+class SingleMenuItemsView(generics.RetrieveUpdateAPIView,generics.DestroyAPIView):
+    serializer_class = MenuSerializer
+    queryset = Menu.objects.all()
 
 
 
